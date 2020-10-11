@@ -16,6 +16,7 @@ class LinkedList:
     def __init__(self, iterable=[]):
         dummy = llNode(None, None)
         self.head = dummy
+        self.cardinality = 0
         
         traverse = self.head
         
@@ -24,6 +25,7 @@ class LinkedList:
             
             traverse.link = tempNode
             traverse = traverse.link 
+            self.cardinality = self.cardinality + 1
         
     def __str__(self):
         string = ""
@@ -41,6 +43,9 @@ class LinkedList:
     def __iter__(self):
         return IterableLinkedList(self.head)
     
+    def __len__(self):
+        return self.cardinality
+    
     def append(self, data):
         tempNode = llNode(data)
         
@@ -50,23 +55,22 @@ class LinkedList:
             traverse = traverse.link
         
         traverse.link = tempNode
+        self.cardinality = self.cardinality + 1
     
     def insertAt(self, index, data):
-        if index < 0:
+        if index < 0 or index > (self.cardinality - 1):
             raise IndexOutOfBoundsError
         
         tempNode = llNode(data)
         traverse = self.head
         
-        while index > 0 and traverse.link != None:
+        while index > 0:
             traverse = traverse.link
             index = index - 1
         
-        if traverse.link == None:
-            raise IndexOutOfBoundsError
-        else:
-            tempNode.link = traverse.link
-            traverse.link = tempNode
+        tempNode.link = traverse.link
+        traverse.link = tempNode
+        self.cardinality = self.cardinality + 1
     
     def delete(self, data):
         traverse = self.head 
@@ -74,25 +78,24 @@ class LinkedList:
         while traverse.link != None:
             if traverse.link.data == data:
                 traverse.link = traverse.link.link
+                self.cardinality = self.cardinality - 1
                 break
             traverse = traverse.link
     
     def deleteAt(self, index):
-        if index < 0:
+        if index < 0 or index > (self.cardinality - 1):
             raise IndexOutOfBoundsError
         
         traverse = self.head
         
-        while index > 0 and traverse.link != None:
+        while index > 0:
             traverse = traverse.link
             index = index - 1
         
-        if traverse.link == None:
-            raise IndexOutOfBoundsError
-        else:
-            datum = traverse.link.data
-            traverse.link = traverse.link.link
-            return datum
+        datum = traverse.link.data
+        traverse.link = traverse.link.link
+        self.cardinality = self.cardinality - 1
+        return datum
 
     def merge(self, iterable):
         traverse = self.head
@@ -103,6 +106,7 @@ class LinkedList:
         for element in iterable:
             tempNode = llNode(element)
             traverse.link = tempNode
+            self.cardinality = self.cardinality + 1
             traverse = traverse.link
     
 
