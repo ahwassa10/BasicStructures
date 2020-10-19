@@ -1,5 +1,6 @@
 # LinkedList.py
 # Created Thursday, October 8, 2020
+# Use ELL.py
 
 class IndexOutOfBoundsError(Exception):
     pass
