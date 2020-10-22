@@ -114,6 +114,8 @@ class LinkedList:
     def append(self, data):
         """
         Creates a new node using the datum in the data field and then appends the node to the end of the linked list. 
+        
+        Returns a reference to the last node in the linked list (the node that was appended to the end of the list by this method).
         """
         tempNode = llNode(data)
         
@@ -124,6 +126,7 @@ class LinkedList:
         
         traverse.link = tempNode
         self.cardinality = self.cardinality + 1
+        return tempNode
     
     def insertAt(self, index, data):
         """
